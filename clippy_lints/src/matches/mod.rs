@@ -23,6 +23,7 @@ mod significant_drop_in_scrutinee;
 mod single_match;
 mod try_err;
 mod wild_in_or_pats;
+mod struct_destructuring;
 
 use clippy_config::Conf;
 use clippy_utils::msrvs::{self, Msrv};

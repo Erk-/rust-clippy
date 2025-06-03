@@ -788,4 +788,5 @@ pub static LINTS: &[&crate::LintInfo] = &[
     crate::zero_repeat_side_effects::ZERO_REPEAT_SIDE_EFFECTS_INFO,
     crate::zero_sized_map_values::ZERO_SIZED_MAP_VALUES_INFO,
     crate::zombie_processes::ZOMBIE_PROCESSES_INFO,
+    crate::destructuring::REST_WHEN_DESTRUCTURING_INFO,
 ];
