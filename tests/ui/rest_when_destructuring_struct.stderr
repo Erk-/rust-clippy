@@ -4,8 +4,8 @@ error: struct destructuring with rest (`..`)
 LL |     let S { a, b, .. } = s;
    |         ^^^^^^^^^^^^^^
    |
-   = note: `-D clippy::rest-when-destructuring-struct` implied by `-D warnings`
-   = help: to override `-D warnings` add `#[allow(clippy::rest_when_destructuring_struct)]`
+   = note: `-D clippy::rest-pattern-accessible-field` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::rest_pattern_accessible_field)]`
 help: consider explicitly ignoring remaining fields with wildcard patterns (`x: _`)
    |
 LL -     let S { a, b, .. } = s;

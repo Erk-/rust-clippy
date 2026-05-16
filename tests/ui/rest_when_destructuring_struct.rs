@@ -1,6 +1,7 @@
 //@aux-build:proc_macros.rs
 //@aux-build:non-exhaustive-struct.rs
-#![warn(clippy::rest_when_destructuring_struct)]
+#![warn(clippy::rest_pattern_accessible_field)]
+#![warn(clippy::unnecessary_rest_pattern)]
 
 use non_exhaustive_struct::NonExhaustiveStruct;
 
@@ -29,25 +30,27 @@ fn main() {
     let s = S { a: 1, b: 2, c: 3 };
 
     let S { a, b, .. } = s;
-    //~^ rest_when_destructuring_struct
+    //~^ rest_pattern_accessible_field
 
     let S { a, b, c, .. } = s;
-    //~^ rest_when_destructuring_struct
+    //~^ rest_pattern_accessible_field
+    //~| unnecessary_rest_pattern
 
     let e = E::A { a1: 1, a2: 2 };
 
     match e {
         E::A { a1, a2 } => (),
         E::B { .. } => (),
-        //~^ rest_when_destructuring_struct
+        //~^ rest_pattern_accessible_field
         E::C { .. } => (),
-        //~^ rest_when_destructuring_struct
+        //~^ rest_pattern_accessible_field
+        //~| unnecessary_rest_pattern
     }
 
     match e {
         E::A { a1: _, a2: _ } => (),
         E::B { b1: _, .. } => (),
-        //~^ rest_when_destructuring_struct
+        //~^ rest_pattern_accessible_field
         E::C {} => (),
     }
 
@@ -64,7 +67,7 @@ fn main() {
 
     let ne = NonExhaustiveStruct::default();
     let NonExhaustiveStruct { field1: _, .. } = ne;
-    //~^ rest_when_destructuring_struct
+    //~^ rest_pattern_accessible_field
 
     let ne = NonExhaustiveStruct::default();
     let NonExhaustiveStruct {
@@ -74,5 +77,5 @@ fn main() {
     use m::Sm;
 
     let Sm { .. } = Sm::default();
-    //~^ rest_when_destructuring_struct
+    //~^ rest_pattern_accessible_field
 }
