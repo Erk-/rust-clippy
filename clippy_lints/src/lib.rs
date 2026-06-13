@@ -860,8 +860,7 @@ rustc_lint::late_lint_methods!(
         WithCapacityZero: with_capacity_zero::WithCapacityZero = with_capacity_zero::WithCapacityZero,
         RefPatterns: ref_patterns::RefPatterns = ref_patterns::RefPatterns,
         RedundantElse: redundant_else::RedundantElse = redundant_else::RedundantElse,
-        UnnecessaryRestPattern: rest_when_destructuring_struct::UnnecessaryRestPattern = rest_when_destructuring_struct::UnnecessaryRestPattern,
-        RestPatternAccessibleField: rest_when_destructuring_struct::RestPatternAccessibleField = rest_when_destructuring_struct::RestPatternAccessibleField,
+        RestWhenDestructuringStruct: rest_when_destructuring_struct::RestWhenDestructuringStruct = rest_when_destructuring_struct::RestWhenDestructuringStruct,
         // add late passes here, used by `cargo dev new_lint`
     ]]
 );
