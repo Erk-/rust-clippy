@@ -117,8 +117,8 @@ impl<'tcx> LateLintPass<'tcx> for RestWhenDestructuringStruct {
             }
 
             // Filter out results from macros
-            if (!needs_dotdot || !missing_suggestions.is_empty())
-                && pat.span.in_external_macro(cx.tcx.sess.source_map())
+            if (missing_suggestions.is_empty() && needs_dotdot)
+                || pat.span.in_external_macro(cx.tcx.sess.source_map())
                 || is_from_proc_macro(cx, pat)
             {
                 return;
@@ -152,9 +152,7 @@ impl<'tcx> LateLintPass<'tcx> for RestWhenDestructuringStruct {
                         );
                     },
                 );
-            }
-
-            if missing_suggestions.is_empty() && !needs_dotdot {
+            } else if !needs_dotdot {
                 let message = "consider removing the unnecessary rest pattern (`..`)";
                 span_lint_and_then(
                     cx,
