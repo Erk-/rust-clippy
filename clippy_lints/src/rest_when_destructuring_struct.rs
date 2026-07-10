@@ -38,7 +38,7 @@ declare_clippy_lint! {
     ///
     /// let S { a, b, c: _ } = s;
     /// ```
-    #[clippy::version = "1.98.0"]
+    #[clippy::version = "1.99.0"]
     pub REST_PATTERN_ACCESSIBLE_FIELD,
     restriction,
     "rest pattern (`..`) used for accessible field"
@@ -75,7 +75,7 @@ declare_clippy_lint! {
     ///
     /// let S { a, b, c } = s;
     /// ```
-    #[clippy::version = "1.98.0"]
+    #[clippy::version = "1.99.0"]
     pub UNNECESSARY_REST_PATTERN,
     restriction,
     "unnecessary rest pattern (`..`) in destructuring expression"
@@ -95,9 +95,8 @@ impl<'tcx> LateLintPass<'tcx> for RestWhenDestructuringStruct {
             && let Some(vid) = qty.opt_def_id().map(|x| a.variant_index_with_id(x))
             && let Some(variant) = a.variants().get(vid)
         {
-            // dbg!(&variant, &fields);
             let mut missing_suggestions = String::new();
-            let mut needs_dotdot = false;
+            let mut needs_dotdot = variant.field_list_has_applicable_non_exhaustive();
 
             for field in &variant.fields {
                 if field.vis.is_accessible_from(cx.tcx.parent_module(pat.hir_id), cx.tcx) {
@@ -110,10 +109,6 @@ impl<'tcx> LateLintPass<'tcx> for RestWhenDestructuringStruct {
                 } else {
                     needs_dotdot = true;
                 }
-            }
-
-            if variant.field_list_has_applicable_non_exhaustive() {
-                needs_dotdot = true;
             }
 
             // Filter out results from macros
